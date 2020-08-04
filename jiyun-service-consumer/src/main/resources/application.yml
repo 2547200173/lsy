@@ -1,0 +1,36 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: servicer-consumer
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka,http://127.0.0.1:8762/eureka
+  instance:
+    prefer-ip-address: true  #当其他服务获取地址时提供ip而不是hostname
+    ip-address: 127.0.0.1 #指定自己的ip信息，不指定的话会自己寻找
+    lease-renewal-interval-in-seconds: 10 #向注册中心发送心跳的频率
+    lease-expiration-duration-in-seconds: 30 #若注册中心检测到某个微服务在30秒内未发送心跳，则剔除出集群
+#service-provider:
+#  ribbon:
+#    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+#hystrix:
+#  command:  #命令
+#    default:
+#      execution: #执行
+#        isolation: #隔离
+#          thread:
+#            timeoutInMilliseconds: 5000 # 设置hystrix的超时时间为5000ms
+feign:
+  hystrix:
+    enabled: true
+  compression:
+    request:
+      enabled: true  #开启请求压缩
+    response:
+      enabled: true  #开启相应压缩
+logging:
+  level:
+    cn.jiyun.service.jiyunserviceconsumer:
+      debug
